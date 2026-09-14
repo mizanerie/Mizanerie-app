@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#B40F51">
+<title>Mizanerie — Calculez le coût de revient de vos desserts</title>
+<meta name="description" content="Mizanerie calcule le coût de revient d'une pièce, le prix de vente conseillé et votre marge. Pour pâtissiers, traiteurs et vendeurs de desserts. Gratuit, sans carte bancaire.">
+<link rel="canonical" href="https://mizanerie.com/">
+<meta property="og:title" content="Mizanerie — Connaître ses coûts et ses marges">
+<meta property="og:description" content="Le coût de revient d'une pièce, le prix de vente conseillé et votre marge. En quelques minutes.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mizanerie.com/">
+<meta property="og:image" content="https://mizanerie.com/icons/icon-1024.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/icons/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Mizanerie",
+"applicationCategory":"BusinessApplication","operatingSystem":"Web, iOS, Android",
+"description":"Calcul du coût de revient, du prix de vente et des marges pour la pâtisserie.",
+"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}
+</script>
+<style>
+:root{
+  --bg:#FAF6EE; --card:#FFFFFF; --ink:#3E2218; --muted:#7A6A62; --line:#E8E0D4;
+  --rasp:#B40F51; --rasp-d:#900C40; --rasp-soft:#FAEDF2; --cream:#FBF6EC;
+  --pista:#4F7F2E;
+  --display:'Bricolage Grotesque',Figtree,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --body:Figtree,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(32px,7vw,54px);font-weight:800;line-height:1.08}
+h2{font-size:clamp(26px,5vw,38px);font-weight:800;line-height:1.15}
+h3{font-size:20px;font-weight:600}
+p{margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:0 26px;border-radius:15px;font-weight:700;font-size:17px;text-decoration:none;border:0;cursor:pointer;transition:background .15s,transform .1s}
+.btn-primary{background:var(--rasp);color:var(--cream)}
+.btn-primary:hover{background:var(--rasp-d)}
+.btn-primary:active{transform:scale(.98)}
+.btn-secondary{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost{background:none;color:var(--ink);min-height:46px;padding:0 14px;font-weight:600}
+:focus-visible{outline:3px solid #B40F5199;outline-offset:3px}
+
+header{position:sticky;top:0;z-index:50;background:#FAF6EEF2;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:20px;text-decoration:none}
+.brand img{width:36px;height:36px;border-radius:9px}
+.nav-links{display:none;gap:6px;align-items:center}
+@media(min-width:880px){.nav-links{display:flex}}
+.nav-links a{text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600;font-size:15.5px;color:var(--muted)}
+.nav-links a:hover{color:var(--ink);background:var(--rasp-soft)}
+.bar .btn{min-height:46px;padding:0 18px;font-size:15.5px}
+.bar .btn-ghost{display:none}
+@media(min-width:520px){.bar .btn-ghost{display:inline-flex}}
+
+.hero{padding:52px 0 20px}
+.hero-grid{display:grid;gap:38px;align-items:center}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:50px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--rasp-soft);color:var(--rasp-d);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;border-radius:999px;margin-bottom:18px}
+.hero p.lead{font-size:19px;color:var(--muted);margin:18px 0 26px;max-width:32em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.reassure{display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;font-size:14.5px;color:var(--muted)}
+.reassure span{display:flex;align-items:center;gap:7px}
+.tick{color:var(--pista);font-weight:700}
+.phone{position:relative;margin:0 auto;width:min(300px,78vw);border-radius:42px;border:11px solid #221009;background:#221009;box-shadow:0 26px 60px #3E221833;overflow:hidden}
+.phone img{border-radius:31px}
+.hero-visual{position:relative}
+
+.strip{background:var(--ink);color:var(--cream);margin-top:40px}
+.strip .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-top:26px;padding-bottom:26px;text-align:center}
+.strip b{display:block;font-family:var(--display);font-size:clamp(18px,3.6vw,28px);font-weight:800}
+.strip span{font-size:13.5px;color:#DCCEC2}
+
+section{padding:64px 0}
+.section-head{max-width:36em;margin:0 auto 38px;text-align:center}
+.section-head p{color:var(--muted);margin-top:14px;font-size:17.5px}
+
+.problem{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quote{max-width:30em;margin:0 auto;text-align:center;font-family:var(--display);font-size:clamp(21px,3.4vw,28px);font-weight:600;line-height:1.35}
+.quote span{color:var(--rasp)}
+
+.steps{display:grid;gap:18px;counter-reset:s}
+@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 24px}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--rasp-soft);color:var(--rasp-d);font-family:var(--display);font-weight:800;font-size:19px;margin-bottom:16px}
+.step p{color:var(--muted);margin-top:10px;font-size:16px}
+
+.feature{display:grid;gap:34px;align-items:center;padding:34px 0}
+@media(min-width:900px){
+  .feature{grid-template-columns:1fr 1fr;gap:56px}
+  .feature.flip .f-text{order:2}
+}
+.f-text h3{font-size:clamp(22px,3.4vw,30px);font-weight:800}
+.f-text p{color:var(--muted);margin-top:14px;font-size:17px}
+.f-list{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.f-list li{display:flex;gap:10px;align-items:flex-start;font-size:16.5px}
+.f-list li::before{content:"✓";color:var(--pista);font-weight:800;flex:none}
+.shot{width:min(258px,70vw);margin:0 auto;border-radius:30px;border:9px solid #221009;background:#221009;overflow:hidden;box-shadow:0 18px 44px #3E221826}
+.shot img{border-radius:22px}
+
+.who{display:grid;gap:14px}
+@media(min-width:700px){.who{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.who{grid-template-columns:repeat(4,1fr)}}
+.who div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;font-weight:600}
+.who small{display:block;color:var(--muted);font-weight:400;margin-top:6px;font-size:14.5px}
+
+.pricing{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.plans{display:grid;gap:22px;max-width:820px;margin:0 auto}
+@media(min-width:760px){.plans{grid-template-columns:1fr 1fr;align-items:start}}
+.plan{border:1.5px solid var(--line);border-radius:22px;padding:28px;background:var(--bg);display:flex;flex-direction:column}
+.plan.best{border-color:var(--rasp);background:var(--card);box-shadow:0 14px 40px #B40F5114;position:relative}
+.badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--rasp);color:var(--cream);font-size:13px;font-weight:700;padding:5px 14px;border-radius:999px;white-space:nowrap}
+.price{font-family:var(--display);font-size:40px;font-weight:800;margin:12px 0 4px}
+.price small{font-size:16px;font-weight:600;color:var(--muted)}
+.plan ul{list-style:none;margin:20px 0;padding:0;display:flex;flex-direction:column;gap:11px;font-size:16px;flex:1}
+.plan li{display:flex;gap:10px;align-items:flex-start}
+.plan li::before{content:"✓";color:var(--pista);font-weight:800;flex:none}
+.plan .btn{width:100%}
+.note{text-align:center;color:var(--muted);font-size:14.5px;margin-top:24px;max-width:44em;margin-inline:auto}
+
+.faq{max-width:760px;margin:0 auto}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+summary{cursor:pointer;padding:20px 22px;font-weight:600;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:24px;color:var(--rasp);font-weight:400;line-height:1}
+details[open] summary::after{content:"–"}
+details p{padding:0 22px 20px;color:var(--muted);font-size:16.5px}
+
+.final{background:var(--ink);color:var(--cream);text-align:center;border-radius:28px;padding:52px 24px;margin:0 20px;max-width:1040px;margin-inline:auto}
+.final h2{color:var(--cream)}
+.final p{color:#DCCEC2;margin:16px auto 28px;max-width:34em}
+
+footer{padding:44px 0 40px;border-top:1px solid var(--line);margin-top:64px;color:var(--muted);font-size:15px}
+.foot{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot-links{display:flex;flex-wrap:wrap;gap:18px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/"><img src="/icons/icon-180.png" alt=""><span>Mizanerie</span></a>
+    <nav class="nav-links">
+      <a href="#comment">Comment ça marche</a>
+      <a href="#fonctions">Fonctionnalités</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a class="btn btn-ghost" href="/app/">Mon compte</a>
+      <a class="btn btn-primary" href="/app/">Essayer</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Calculez • Maîtrisez • Commercez</span>
+      <h1>Savez-vous vraiment ce que vous coûte une pièce&nbsp;?</h1>
+      <p class="lead">Mizanerie transforme vos prix d'achat en coût de revient à la pièce, vous propose un prix de vente et calcule votre marge. Sans tableur et sans notions de comptabilité.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="/app/">Essayer gratuitement</a>
+        <a class="btn btn-secondary" href="#comment">Voir comment ça marche</a>
+      </div>
+      <div class="reassure">
+        <span><b class="tick">✓</b> Sans carte bancaire</span>
+        <span><b class="tick">✓</b> Sans installation</span>
+        <span><b class="tick">✓</b> En 6 langues</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone"><img src="/shots/m_cost.jpg" width="618" height="1300" alt="Mizanerie affiche le coût de revient d'une pièce, détaillé entre la préparation et les autres ingrédients" fetchpriority="high"></div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <div><b>À la pièce</b><span>le coût réel de ce que vous vendez</span></div>
+    <div><b>Une seule fois</b><span>votre crème, reprise partout</span></div>
+    <div><b>Automatique</b><span>quand vos prix changent</span></div>
+  </div>
+</div>
+
+<section class="problem">
+  <div class="wrap">
+    <p class="quote">« Je connais le prix de mon carton de biscuits. Mais <span>combien me coûte un seul tiramisu&nbsp;?</span> »</p>
+    <p style="text-align:center;color:var(--muted);max-width:34em;margin:22px auto 0">C'est la question qui décide si votre activité est rentable. Y répondre à la main prend des heures, et tout est à refaire au moindre changement de prix.</p>
+  </div>
+</section>
+
+<section id="comment">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Trois étapes, et vous savez tout</h2>
+      <p>Vous entrez les informations, l'application fait les calculs.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Vos matières premières</h3>
+        <p>« Combien avez-vous payé le pot ? Combien contient-il ? » Mizanerie en déduit le coût au gramme, au millilitre ou à la pièce.</p>
+      </div>
+      <div class="step">
+        <h3>Vos préparations</h3>
+        <p>Votre crème est calculée une seule fois, pour une fournée entière. Chaque produit de la gamme reprend automatiquement sa part.</p>
+      </div>
+      <div class="step">
+        <h3>Vos produits</h3>
+        <p>Vous obtenez le coût de revient d'une pièce, un prix de vente conseillé selon la marge visée, et votre marge réelle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fonctions" style="padding-top:20px">
+  <div class="wrap">
+
+    <div class="feature">
+      <div class="f-text">
+        <h3>Le coût d'une pièce, pas d'un lot</h3>
+        <p>La référence de Mizanerie est toujours la pièce vendue. Vous voyez d'un coup d'œil ce que coûte un tiramisu, et non seulement ce que coûte la fournée.</p>
+        <ul class="f-list">
+          <li>Détail entre préparations, ingrédients et emballage</li>
+          <li>Calcul instantané pour 50, 150 ou 1 000 pièces</li>
+          <li>Fiche recette exportable en PDF</li>
+        </ul>
+      </div>
+      <div class="shot"><img src="/shots/m_cost.jpg" width="618" height="1300" alt="Coût de revient détaillé d'un produit" loading="lazy"></div>
+    </div>
+
+    <div class="feature flip">
+      <div class="f-text">
+        <h3>Un prix change, tout se recalcule</h3>
+        <p>Le mascarpone augmente ? Modifiez son prix une seule fois. Vos préparations, vos produits, vos marges et vos productions sont mis à jour immédiatement, et l'ancien prix reste dans l'historique.</p>
+        <ul class="f-list">
+          <li>Aucun produit ne conserve un prix périmé</li>
+          <li>Historique pour comprendre les hausses</li>
+          <li>Alerte si vous vendez à perte</li>
+        </ul>
+      </div>
+      <div class="shot"><img src="/shots/m_ing.jpg" width="618" height="1300" alt="Saisie d'une matière première avec son coût unitaire calculé automatiquement" loading="lazy"></div>
+    </div>
+
+    <div class="feature">
+      <div class="f-text">
+        <h3>Un prix de vente que vous maîtrisez</h3>
+        <p>Indiquez la marge souhaitée, Mizanerie propose un prix. Vous restez libre de fixer le vôtre : marge, taux de marge, taux de marque et coefficient s'ajustent aussitôt.</p>
+        <ul class="f-list">
+          <li>Marge calculée sur le prix de vente ou sur le coût</li>
+          <li>Termes comptables expliqués simplement</li>
+          <li>Simulation du chiffre d'affaires et de la marge</li>
+        </ul>
+      </div>
+      <div class="shot"><img src="/shots/m_margin.jpg" width="618" height="1300" alt="Marge, taux de marque et simulation pour une quantité donnée" loading="lazy"></div>
+    </div>
+
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Pensé pour ceux qui vendent</h2>
+      <p>Du premier gâteau vendu entre voisins à la production quotidienne.</p>
+    </div>
+    <div class="who">
+      <div>Pâtissiers à domicile<small>Fixez enfin vos prix sans deviner.</small></div>
+      <div>Artisans et pâtisseries<small>Suivez la rentabilité de chaque référence.</small></div>
+      <div>Traiteurs<small>Chiffrez une production complète en quelques secondes.</small></div>
+      <div>Futurs entrepreneurs<small>Vérifiez si votre idée est rentable avant de vous lancer.</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="tarifs" class="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Un tarif simple</h2>
+      <p>Commencez gratuitement, sans carte bancaire. Vous passerez au Premium quand l'application vous fera gagner de l'argent.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Gratuite</h3>
+        <div class="price">0&nbsp;€</div>
+        <ul>
+          <li>15 matières premières</li>
+          <li>1 préparation et 1 produit</li>
+          <li>Coût de revient et prix conseillé</li>
+          <li>Données conservées sur l'appareil</li>
+        </ul>
+        <a class="btn btn-secondary" href="/app/">Commencer</a>
+      </div>
+      <div class="plan best">
+        <span class="badge">3 jours d'essai gratuit</span>
+        <h3>Premium</h3>
+        <div class="price">5&nbsp;€ <small>/ mois</small></div>
+        <p style="color:var(--muted);font-size:15px">ou 49 € par an</p>
+        <ul>
+          <li>Matières, préparations et produits illimités</li>
+          <li>Photo de recette convertie en liste d'ingrédients</li>
+          <li>Fiches PDF et calcul de production</li>
+          <li>Historique des prix</li>
+          <li>Sauvegarde et synchronisation sur tous vos appareils</li>
+        </ul>
+        <a class="btn btn-primary" href="/app/">Créer mon compte</a>
+      </div>
+    </div>
+    <p class="note">Sans engagement, tarifs adaptés selon les pays. L'abonnement arrive très prochainement : en attendant, la version gratuite et la sauvegarde en ligne sont déjà disponibles.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq">
+    <div class="section-head"><h2>Questions fréquentes</h2></div>
+
+    <details open>
+      <summary>Faut-il s'y connaître en comptabilité ?</summary>
+      <p>Non. Mizanerie pose des questions simples : ce que vous avez payé, ce que contient le paquet, ce que vous utilisez. L'application fait les calculs et explique chaque terme, du coût de revient au taux de marque.</p>
+    </details>
+
+    <details>
+      <summary>Comment calculer une crème utilisée dans plusieurs desserts ?</summary>
+      <p>Vous créez votre crème une seule fois, en indiquant ce qu'elle contient et la quantité obtenue, par exemple 140 portions. Mizanerie en déduit le coût d'une portion, puis chaque produit de la gamme reprend automatiquement la part qu'il utilise.</p>
+    </details>
+
+    <details>
+      <summary>Que se passe-t-il si le prix d'un ingrédient augmente ?</summary>
+      <p>Vous modifiez ce prix à un seul endroit. Toutes les préparations, tous les produits, toutes les marges et toutes les productions concernés sont recalculés immédiatement. L'ancien prix est conservé dans l'historique pour comprendre l'évolution de vos coûts.</p>
+    </details>
+
+    <details>
+      <summary>Quelles langues et quelles devises ?</summary>
+      <p>Français, arabe, anglais, espagnol, italien et allemand. Vous choisissez votre devise, du dirham à l'euro en passant par le franc CFA : tous les calculs se font dans cette devise, sans conversion.</p>
+    </details>
+
+    <details>
+      <summary>Mes données sont-elles protégées ?</summary>
+      <p>Sans compte, vos données restent sur votre appareil. Avec un compte, elles sont stockées sur des serveurs situés à Paris et strictement isolées : aucun autre utilisateur ne peut y accéder. Vous pouvez supprimer votre compte et toutes vos données à tout moment depuis l'application.</p>
+    </details>
+
+    <details>
+      <summary>Faut-il installer quelque chose ?</summary>
+      <p>Non, Mizanerie fonctionne dans votre navigateur. Vous pouvez l'ajouter à votre écran d'accueil pour l'utiliser comme une application : sur iPhone, via le bouton Partager, puis « Sur l'écran d'accueil ».</p>
+    </details>
+
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="final">
+    <h2>Votre prochaine fournée, au centime près</h2>
+    <p>Ajoutez une matière première, composez un produit, et découvrez ce qu'il vous coûte vraiment. C'est gratuit et cela prend cinq minutes.</p>
+    <a class="btn btn-primary" href="/app/">Essayer gratuitement</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/icons/icon-180.png" alt=""><span>Mizanerie</span></a>
+    <div class="foot-links">
+      <a href="/app/">Ouvrir l'application</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">Questions</a>
+      <a href="mailto:contact@mizanerie.com">contact@mizanerie.com</a>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:18px;font-size:14px">© 2026 Mizanerie. Calculez, maîtrisez, commercez.</div>
+</footer>
+
+</body>
+</html>
